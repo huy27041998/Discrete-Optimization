@@ -1,5 +1,6 @@
 from ortools.sat.python import cp_model
 import time
+import math
 class coloringCP:
     def __init__(self, edges, edge_count, node_count):
         super().__init__()
@@ -8,26 +9,30 @@ class coloringCP:
         self.node_count = node_count
     def stateModel(self):
         self.model = cp_model.CpModel()
-        self.x = [self.model.NewIntVar(0, self.node_count, 'edge ' + str(i)) for i in range(self.node_count)]
-        self.color_num = self.model.NewIntVar(0, self.node_count, 'color_num')
+        self.min_color = int(2 * math.sqrt(self.edge_count)) + 1
+        # self.min_color = self.node_count
+        self.x = [self.model.NewIntVar(0, self.min_color, 'edge ' + str(i)) for i in range(self.node_count)]
         for edge in self.edges:
             self.model.Add(self.x[edge[0]] != self.x[edge[1]])
             self.model.Add(self.x[edge[1]] != self.x[edge[0]])
-            self.min_color = self.node_count
-            self.model.AddMaxEquality(self.color_num, self.x)
     def solve(self):
         self.stateModel()
         start = time.time()
         solver = cp_model.CpSolver()
-        solver.parameters.max_time_in_seconds = 300
+        solver.parameters.max_time_in_seconds = 800
+        solution = []
         while(1):
-            self.model.Add(self.color_num <= self.min_color)
+            for i in range(self.node_count):
+                self.model.Add(self.x[i] <= self.min_color)
             if (solver.Solve(self.model) == cp_model.FEASIBLE):
-                if (solver.Value(self.color_num) < self.min_color):
-                    self.min_color = solver.Value(self.color_num)
+                cur_solution = [solver.Value(self.x[i]) for i in range(self.node_count)]
+                cur_color_num = max(cur_solution)
+                if (cur_color_num < self.min_color):
+                    self.min_color = cur_color_num
+                    solution = cur_solution
             else: 
                 break
-            if time.time() - start > 60:
+            if time.time() - start > 600:
                 break
-        return self.min_color, [solver.Value(self.x[i]) for i in range(self.node_count)]
+        return self.min_color, solution
 

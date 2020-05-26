@@ -20,7 +20,6 @@ except:
 
 # Python 3:
 try:
-    from time import process_time
     from urllib.parse import urlparse, urlencode
     from urllib.request import urlopen, Request
     from urllib.error import HTTPError
@@ -30,8 +29,6 @@ except:
 import sys
 # Python 2:
 if sys.version_info < (3, 0):
-    def process_time():
-        return time.clock()
     def input(str):
         return raw_input(str)
 
@@ -217,7 +214,7 @@ def output(input_file, solver_file):
 
     solution = ''
 
-    start = process_time()
+    start = time.clock()
     try:
         solution = pkg.solve_it(load_input_data(input_file))
     except Exception as e:
@@ -227,7 +224,7 @@ def output(input_file, solver_file):
         print(str(e))
         print('')
         return 'Local Exception =('
-    end = process_time()
+    end = time.clock()
 
     if not (isinstance(solution, str) or isinstance(solution, unicode)):
         print('Warning: the solver did not return a string.  The given object will be converted with the str() method.')
@@ -262,11 +259,11 @@ def login_dialog(assignment_key, results, credentials_file_location = '_credenti
         else:
             login, token = login_prompt('')
 
-        code, response = submit_solution(assignment_key, login, token, results)
+        code, responce = submit_solution(assignment_key, login, token, results)
 
-        print('\n== Coursera Response ...')
+        print('\n== Coursera Responce ...')
         #print(code)
-        print(response)
+        print(responce)
         
         if code != 401:
             success = True
@@ -341,24 +338,24 @@ def submit_solution(assignment_key, email_address, token, results):
     try:
         res = urlopen(req, json.dumps(submission).encode('utf8'))
     except HTTPError as e:
-        response = json.loads(e.read().decode('utf8'))
+        responce = json.loads(e.read().decode('utf8'))
 
-        if 'details' in response and response['details'] != None and \
-            'learnerMessage' in response['details']:
-            return e.code, response['details']['learnerMessage']
+        if 'details' in responce and responce['details'] != None and \
+            'learnerMessage' in responce['details']:
+            return e.code, responce['details']['learnerMessage']
         else:
             return e.code, 'Unexpected response code, please contact the ' \
-                               'course staff.\nDetails: ' + response['message']
+                               'course staff.\nDetails: ' + responce['message']
 
     code = res.code
-    response = json.loads(res.read().decode('utf8'))
+    responce = json.loads(res.read().decode('utf8'))
 
     if code >= 200 and code <= 299:
         return code, 'Your submission has been accepted and will be ' \
                      'graded shortly.'
 
     return code, 'Unexpected response code, please contact the '\
-                 'course staff.\nDetails: ' + response
+                 'course staff.\nDetails: ' + responce
 
 
 def main(args):

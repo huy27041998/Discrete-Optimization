@@ -378,22 +378,22 @@ def readData(file_location):
 #         if _print: print('Step ' + str(it) + ': current obj = ' + str(obj) +  ', True obj = ', calculate_obj(cur_solution, points, nodeCount), ', cur_solution = ' + str(cur_solution), 'delta = ', candidate[index].delta)
 #     return cur_solution, obj
 
-def search1(s):
-    print('HILL CLIMBING:')
-    s.hillclimbingsearch(1000)
-    s.printSolution()
+# def search1(s):
+#     print('HILL CLIMBING:')
+#     s.hillclimbingsearch(1000)
+#     s.printSolution()
 
-def search2(s):
-    print('TABU:')
-    s.tabusearch(1000, tblen=5)
-    s.printSolution()
+# def search2(s):
+#     print('TABU:')
+#     s.tabusearch(1000, tblen=5)
+#     s.printSolution()
 
-def search3(s):
-    print('LNS:')
-    s.generateInitialSolution()
-    s.lnsearch(1000, 20)
-    s.printSolution()
+# def search3(s):
+#     print('LNS:')
+#     s.generateInitialSolution()
+#     s.lnsearch(1000, 20)
+#     s.printSolution()
 
-nodeCount, points = readData("data/tsp_280_1")
-s = Tsp(nodeCount, points)
-search3(s)
+# nodeCount, points = readData("data/tsp_280_1")
+# s = Tsp(nodeCount, points)
+# search3(s)
