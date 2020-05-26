@@ -1,0 +1,6 @@
+test 1: 50 dinh
+test 2: 70 dinh
+test 3: 100 dinh
+test 4: 250 dinh
+test 5: 500 dinh
+test 6: 1000 dinh

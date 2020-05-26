@@ -1,0 +1,10 @@
+import numpy as np
+x = np.array([1, 4, 3, 5])
+y = np.array([5, 2.75, 3, 2.5])
+x = np.reshape(x, (1, 4))
+y = np.reshape(y, (1, 4))
+a1 = np.array(np.transpose(x).dot(x))
+print(a1)
+print(np.linalg.det(a1))
+a2 = np.array(np.transpose(x).dot(y))
+np.linalg.inv(a1).dot(a2)
