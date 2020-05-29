@@ -45,51 +45,9 @@ def solve_it(input_data):
     items.sort(key=lambda x: -x.value / x.weight)
     knapsackSolver = KnapsackSolver(item_count, items, capacity)
     value, taken = knapsackSolver.search()
-    # def branch_and_bound(capacity, value, taken):
-    #     pq = PriorityQueue()
-    #     items.sort(key=lambda x: -x.value / x.weight)
-    #     cur_weight = 0
-    #     cur_value = 0
-    #     for i in range(item_count):
-    #         taken[items[i].index], cur_value, cur_weight = compute_up_and_lower_bound(items, item_count, i, cur_value, cur_weight, capacity)
-    #     return cur_value, taken, 0
-    # if (item_count * capacity > (10 ** 8)):
-    #     value, taken, algo = branch_and_bound(capacity, value, taken)
-    # else: 
-    #     value, taken, algo = dp_solve(capacity, value, taken)
-    # # prepare the solution in the specified output format
     output_data = str(value) + ' ' + str(0) + '\n'
     output_data += ' '.join(map(str, taken))
     return output_data
-
-# def compute_up_and_lower_bound(items, item_count, i, cur_value, cur_weight, w):
-#     if (i == item_count - 1):
-#         if (cur_weight + items[i].weight <= w):
-#             return 1, cur_value + items[i].value, cur_weight + items[i].weight
-#         else: 
-#             return 0, cur_value, cur_weight
-#     e1 = e2 = cur_value
-#     cur_weight1 = cur_weight  + items[i].weight
-#     e1 += items[i].value
-#     cur_weight2 = cur_weight
-#     for j in range(i+1, item_count):
-#         if (cur_weight1 + items[j].weight <= w):
-#             e1 += items[j].value
-#             cur_weight1 += items[j].weight
-#         else:
-#             e1 += items[j].value * (w - cur_weight1) / items[j].weight
-#             break
-#     for j in range(i+1, item_count):
-#         if (cur_weight2 + items[j].weight <= w):
-#             e2 += items[j].value
-#             cur_weight2 += items[j].weight
-#         else:
-#             e2 += items[j].value * (w - cur_weight2) / items[j].weight 
-#             break
-#     if (e1 > e2 and cur_weight + items[i].weight <= w):
-#         return 1, cur_value + items[i].value, cur_weight + items[i].weight
-#     else:
-#         return 0, cur_value, cur_weight
 
 if __name__ == '__main__':
     import sys

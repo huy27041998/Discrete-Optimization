@@ -15,13 +15,13 @@ def solve_it(input_data):
 
     # Runs the command: java Solver -file=tmp.data
 
-    process = Popen(['java', 'Solver', '-file=' + tmp_file_name], stdout=PIPE)
+    process = Popen(['java', '-jar', 'Test.jar', '-file=' + tmp_file_name], stdout=PIPE)
     (stdout, stderr) = process.communicate()
 
     # removes the temporay file
     os.remove(tmp_file_name)
 
-    return stdout.strip()
+    return stdout.decode('utf-8').strip()
 
 
 import sys
