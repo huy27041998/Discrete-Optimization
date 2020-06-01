@@ -17,7 +17,7 @@ class KnapsackSolver:
             self.pq.popleft()
             u1 = Node(v.level + 1, v.weight + self.items[v.level+1].weight, v.value + self.items[v.level+1].value, v.items)
             u1.items.append(self.items[u1.level].index)
-            u2 = Node(v.level, v.weight, v.value, v.items)
+            u2 = Node(v.level + 1, v.weight, v.value, v.items)
             if (u1.weight <= self.capacity and u1.value > maxValue):
                 maxValue = u1.value
                 bestItems = u1.items
