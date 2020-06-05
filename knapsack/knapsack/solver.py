@@ -3,7 +3,7 @@
 
 from collections import namedtuple
 import math
-from KnapsackSolver import KnapsackSolver
+from KnapsackSol`ver import KnapsackSolver
 Item = namedtuple("Item", ['index', 'value', 'weight'])
 
 def solve_it(input_data):
